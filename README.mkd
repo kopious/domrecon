@@ -1,0 +1,17 @@
+# domrecon
+
+domrecon is a set of shell tools for doing discovery and analysis on a specific domain 
+
+It is designed to run on Kali Linux with the kali-tools-top10 package installed, 
+but should run on any shell environment with the proper dependencies. 
+
+See init.sh for a list of dependencies.
+
+## Run
+
+
+```
+▶ ./domrecon.sh example.com
+```
+
+

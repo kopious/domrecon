@@ -14,27 +14,24 @@
 # discover.sh outputs to ~/recon/<domain> two files: domain.txt and urls.txt
 # to be used in further analysis steps.
 #
-[[ $# -ne 1 ]] && { echo -en "Usage: $0 example.com\n";exit 1; }
+
+PNAME=`ps -ocomm --no-header $PPID`
+[[ ! $PNAME == "domrecon.sh" ]] && { echo -en "\nrun: domrecon.sh example.com\n";exit 1; }
 
 DOM=$1
 DOM_DIR=~/recon/$DOM
 DOM_FIL=$DOM_DIR/domains.txt
 URL_FIL=$DOM_DIR/urls.txt
 
-[[ -d $DOM_DIR ]] && { echo -en "${DOM_DIR} already exists.\n";exit 1; }
-
-./init.sh
-status=$?
-
-[[ $status -ne 0 ]] && { echo -en "Failed to init\n";exit 1; }
-
+[[ -d $DOM_DIR ]] && { echo -en "\n${DOM_DIR} already exists.\n";exit 1; }
 
 mkdir $DOM_DIR
 
-sublist3r -v -d $1 -o $DOM_FIL
+sublist3r -d $1 -o $DOM_FIL &> /dev/null
 
-cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL
+cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL 
+
+cat $URL_FIL | fff -S -o $DOM_DIR - &> /dev/null
 
 
-echo "Done"
 exit 0
