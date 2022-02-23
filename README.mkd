@@ -9,6 +9,8 @@ See checkdeps.sh for a list of dependencies.
 
 ## Run
 
+Running the script will use sublist3r to build a list of subdomains, and then attempt 
+to fetch https results from each using Fairly Fast Fetch [fff](https://github.com/tomnomnom/fff) 
 
 ```
 ▶ ./domrecon.sh example.com
