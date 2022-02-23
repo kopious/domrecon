@@ -14,4 +14,17 @@ See checkdeps.sh for a list of dependencies.
 ▶ ./domrecon.sh example.com
 ```
 
+## Output
+
+
+```
+▶ ~/recon/example.com
+▶ ~/recon/example.com/www.example.com
+▶ ~/recon/example.com/api.example.com
+▶ ~/recon/example.com/test.example.com
+▶ ~/recon/example.com/cdn.example.com
+...
+
+```
+
 
