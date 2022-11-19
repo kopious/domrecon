@@ -15,6 +15,8 @@
 # to be used in further analysis steps.
 #
 
+set -x
+
 PNAME=`ps -ocomm --no-header $PPID`
 [[ ! $PNAME == "domrecon.sh" ]] && { echo -en "\nrun: domrecon.sh example.com\n";exit 1; }
 
@@ -27,7 +29,7 @@ URL_FIL=$DOM_DIR/urls.txt
 
 mkdir $DOM_DIR
 
-sublist3r -d $1 -o $DOM_FIL &> /dev/null
+assetfinder $1 |anew $DOM_FIL 
 
 cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL 
 

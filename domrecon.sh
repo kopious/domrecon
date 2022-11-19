@@ -9,6 +9,8 @@
 # EXEC: domrecon.sh example.com
 #
 
+set -x 
+
 read -r -d '' header <<'EOF'
 ________                __________
 \______ \   ____   _____\______   \ ____   ____  ____   ____
@@ -26,9 +28,11 @@ DOM=$1
 
 echo -ne "Running reconnaissance on ${DOM}... "
 
-for script in checkdeps.sh discover.sh
+for script in checkdeps.sh discover.sh scan.sh
 do
+
   echo -ne "\nScript: ${script}..."
+
   ./$script $DOM
   [[ $? -eq 0 ]] && echo -en "OK" || { echo -en "failed.";fails=1; }
 done
