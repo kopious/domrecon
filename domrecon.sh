@@ -9,8 +9,6 @@
 # EXEC: domrecon.sh example.com
 #
 
-set -x 
-
 read -r -d '' header <<'EOF'
 ________                __________
 \______ \   ____   _____\______   \ ____   ____  ____   ____
