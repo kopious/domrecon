@@ -17,7 +17,7 @@ PNAME=`ps -ocomm --no-header $PPID`
 RECON_DIR=~/recon
 
 echo -en "\nChecking dependencies... "
-for name in assetfinder nuclei fff httprobe
+for name in assetfinder nuclei fff httprobe anew
 do
   [[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo apt-get install $name'";deps=1; }
 done
