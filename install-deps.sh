@@ -24,10 +24,10 @@ go install github.com/tomnomnom/waybackurls@latest
 
 go install github.com/tomnomnom/meg@latest
 
-go install -v github.com/tomnomnom/anew@latest
+go install github.com/tomnomnom/anew@latest
 
 go install github.com/tomnomnom/fff@latest
 
-go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 
 echo export PATH="$(go env GOPATH)/bin:$PATH" >>$HOME/.profile
