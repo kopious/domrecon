@@ -34,7 +34,7 @@ echo "processing ${DOM}" >> $OUT_FIL
 
 while read -r line; 
 do 
-nohup perl ~/git/nikto/program/nikto.pl -h $line | anew $OUT_FIL 
+	perl ~/git/nikto/program/nikto.pl -h $line | anew $OUT_FIL 
 done < $DOM_FIL
 
 exit 0
