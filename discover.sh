@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/sh
 #
 # NAME: discover.sh
 #
@@ -15,10 +15,8 @@
 # to be used in further analysis steps.
 #
 
-set -x
-
-PNAME=`ps -ocomm --no-header $PPID`
-[[ ! $PNAME == "domrecon.sh" ]] && { echo -en "\nrun: domrecon.sh example.com\n";exit 1; }
+#PNAME=`ps -ocomm --no-header $PPID`
+#[[ ! $PNAME == "domrecon.sh" ]] && { echo -en "\nrun: domrecon.sh example.com\n";exit 1; }
 
 DOM=$1
 DOM_DIR=~/recon/$DOM
@@ -27,6 +25,8 @@ URL_FIL=$DOM_DIR/urls.txt
 
 [[ -d $DOM_DIR ]] && { echo -en "\n${DOM_DIR} already exists.\n";exit 1; }
 
+[[ -d ~/recon ]] || mkdir ~/recon 
+ 
 mkdir $DOM_DIR
 
 assetfinder $1 |anew $DOM_FIL 
