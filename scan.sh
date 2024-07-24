@@ -36,6 +36,6 @@ cat $DOM_FIL | grep $DOM | httprobe | anew $TMP_FIL
 
 nuclei -l $TMP_FIL -t ~/nuclei-templates -s critical,high,medium | anew $OUT_FIL
 
-rm $TMP_FIL
+#rm $TMP_FIL
 
 exit 0

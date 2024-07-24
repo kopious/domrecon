@@ -30,4 +30,6 @@ go install github.com/tomnomnom/fff@latest
 
 go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 
+go install github.com/OJ/gobuster/v3@latest
+
 echo export PATH="$(go env GOPATH)/bin:$PATH" >>$HOME/.profile
