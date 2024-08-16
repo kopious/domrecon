@@ -1,18 +1,27 @@
 #!/bin/sh
 
-curl https://dl.google.com/go/go1.20.linux-amd64.tar.gz -o go1.20.linux-amd64.tar.gz
+if ! command -v go &> /dev/null
+then
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            curl https://dl.google.com/go/go1.20.linux-amd64.tar.gz -o go-install.tar.gz
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+            curl https://go.dev/dl/go1.22.4.darwin-amd64.tar.gz -o go-install.tar.gz
+    fi
 
-sudo rm -rf /usr/local/go 
-sudo tar -C /usr/local -xzf go1.20.linux-amd64.tar.gz
+    sudo rm -rf /usr/local/go 
+    sudo tar -C /usr/local -xzf go-install.tar.gz
 
-export PATH=$PATH:/usr/local/go/bin
+    export PATH=$PATH:/usr/local/go/bin
 
-echo PATH=$PATH:/usr/local/go/bin >> $HOME/.profile
+    echo PATH=$PATH:/usr/local/go/bin >> $HOME/.profile
 
-rm go1.20.linux-amd64.tar.gz
+    source $HOME/.profile
+
+    rm go-install.tar.gz
+fi
+
 
 go version
-
 
 go install github.com/tomnomnom/assetfinder@latest
 

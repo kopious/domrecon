@@ -31,7 +31,9 @@ mkdir $DOM_DIR
 
 assetfinder $1 |anew $DOM_FIL 
 
-cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL 
+cat $DOM_FIL | httprobe | anew $URL_FIL
+
+# cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL 
 
 cat $URL_FIL | fff -S -o $DOM_DIR - &> /dev/null
 

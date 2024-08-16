@@ -32,10 +32,8 @@ echo "processing ${DOM}" >> $OUT_FIL
 [[ ! -d $DOM_DIR ]] && { echo -en "\n${DOM_DIR} does not exist.\n";exit 1; }
 [[ ! -f $URL_FIL ]] && { echo -en "\n${URL_FIL} does not exist.\n" >> $OUT_FIL;exit 1; }
 
-cat $DOM_FIL | grep $DOM | httprobe | anew $TMP_FIL
+cat $URL_FIL | grep $DOM | anew $TMP_FIL
 
 nuclei -l $TMP_FIL -t ~/nuclei-templates -s critical,high,medium | anew $OUT_FIL
-
-rm $TMP_FIL
 
 exit 0

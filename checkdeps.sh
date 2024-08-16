@@ -11,7 +11,7 @@
 # This script checks to see if required dependencies are installed and directory structures are created. 
 #
 
-PNAME=`ps -ocomm --no-header $PPID`
+PNAME=`ps -ocomm= $PPID`
 [[ ! $PNAME == "domrecon.sh" ]] && { echo -en "run: domrecon.sh example.com\n";exit 1; }
 
 RECON_DIR=~/recon
