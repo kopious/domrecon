@@ -34,6 +34,6 @@ echo "processing ${DOM}" >> $OUT_FIL
 
 cat $URL_FIL | grep $DOM | anew $TMP_FIL
 
-nuclei -l $TMP_FIL -t ~/nuclei-templates -s critical,high,medium | anew $OUT_FIL
+nuclei -l $TMP_FIL -t ~/nuclei-templates -c 50 -rl 300 -bs 25 -mhe 10 -ni -nc | anew $OUT_FIL
 
 exit 0

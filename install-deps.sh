@@ -41,7 +41,18 @@ go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 
 go install github.com/OJ/gobuster/v3@latest
 
+go install github.com/ffuf/ffuf/v2@latest
+
 echo export PATH="$(go env GOPATH)/bin:$PATH" >>$HOME/.profile
 
 source $HOME/.profile
+
+
+# install dirsearch
+
+echo "install dirsearch" 
+echo "https://www.geeksforgeeks.org/dirsearch-go-implementation-of-dirsearch/"
+
+echo "install SecLists"
+echo "https://github.com/danielmiessler/SecLists"
 

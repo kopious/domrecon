@@ -15,21 +15,20 @@
 # to be used in further analysis steps.
 #
 
-#PNAME=`ps -ocomm --no-header $PPID`
-#[[ ! $PNAME == "domrecon.sh" ]] && { echo -en "\nrun: domrecon.sh example.com\n";exit 1; }
+set -x
 
 DOM=$1
 DOM_DIR=~/recon/$DOM
 DOM_FIL=$DOM_DIR/domains.txt
 URL_FIL=$DOM_DIR/urls.txt
 
-[[ -d $DOM_DIR ]] && { echo -en "\n${DOM_DIR} already exists.\n";exit 1; }
-
 [[ -d ~/recon ]] || mkdir ~/recon 
- 
-mkdir $DOM_DIR
 
-assetfinder $1 |anew $DOM_FIL 
+[[ -d $DOM_DIR ]] || mkdir $DOM_DIR
+
+echo $DOM | anew $DOM_FIL
+
+assetfinder $1 | anew $DOM_FIL 
 
 cat $DOM_FIL | httprobe | anew $URL_FIL
 

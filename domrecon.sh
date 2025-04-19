@@ -23,10 +23,11 @@ printf "%s\n" "$header"
 [[ $# -ne 1 ]] && { echo -en "Usage: $0 example.com\n";exit 1; }
 
 DOM=$1
+DOM_DIR=~/recon/$DOM
 
 echo -ne "Running reconnaissance on ${DOM}... "
 
-for script in checkdeps.sh discover.sh scan.sh
+for script in checkdeps.sh discover.sh analyze.sh nmap-all.sh dirsearch.sh scan.sh session-fuzz.sh 
 do
 
   echo -ne "\nScript: ${script}..."
@@ -35,6 +36,10 @@ do
   [[ $? -eq 0 ]] && echo -en "OK" || { echo -en "failed.";fails=1; }
 done
 
-[[ $fails -ne 1 ]] || { echo -en "\nResolve errors listed above and rerun this script\n";exit 1; }
+[[ $fails -ne 0 ]] || { echo -en "\nResolve errors listed above and rerun this script\n";exit 1; }
+
+echo -en "\nDone.\n"
+
+code $DOM_DIR
 
 exit 0
