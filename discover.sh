@@ -30,7 +30,7 @@ echo $DOM | anew $DOM_FIL
 
 assetfinder $1 | anew $DOM_FIL 
 
-cat $DOM_FIL | httprobe | anew $URL_FIL
+cat $DOM_FIL | httprobe | grep "$DOM" | anew $URL_FIL
 
 # cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL 
 

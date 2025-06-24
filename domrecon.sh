@@ -27,7 +27,7 @@ DOM_DIR=~/recon/$DOM
 
 echo -ne "Running reconnaissance on ${DOM}... "
 
-for script in checkdeps.sh discover.sh analyze.sh nmap-all.sh dirsearch.sh scan.sh session-fuzz.sh 
+for script in checkdeps.sh discover.sh scan.sh analyze.sh dirsearch.sh nmap-all.sh  # session-fuzz.sh register-login.sh upload-tester.sh view-fuzzer.sh 
 do
 
   echo -ne "\nScript: ${script}..."
