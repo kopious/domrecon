@@ -38,7 +38,7 @@ HEADER_ISSUES_OUT="$ANALYSIS_DIR/header_issues.txt"
 > "$HEADER_ISSUES_OUT"
 
 # Helper regexes and lists
-SECRET_REGEXES='AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z\-_]{35}|[sS]ecret|[tT]oken|[aA]pi[_-]key|sk_live_[0-9a-zA-Z]{24}|eyJ[A-Za-z0-9\-_]{20,}\.[A-Za-z0-9\-_]{20,}\.[A-Za-z0-9\-_]{20,}'
+SECRET_REGEXES='AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z\-\_]{35}|[sS]ecret|[tT]oken|[aA]pi[\_\-]key|sk_live_[0-9a-zA-Z]{24}|eyJ[A-Za-z0-9\-\_]{20,}\.[A-Za-z0-9\-\_]{20,}\.[A-Za-z0-9\-\_]{20,}'
 VULN_LIBS_LIST='jquery|bootstrap|angular|react|vue|ember|dojo|backbone|knockout|lodash|underscore'
 
 # Security headers to check for
