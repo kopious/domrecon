@@ -19,12 +19,12 @@ PORTS_OUT="$DOM_DIR/open_ports.txt"
 
 while read -r domain; do
     echo "[+] Scanning $domain" | anew "$PORTS_OUT"
-    # -p- : scan all ports
+    # -p : scan specific ports
     # --open : show only open ports
-    # -T4 : aggressive timing
-    # --min-rate=1000 : send packets no slower than 1000 per second
+    # -T5 : aggressive timing
+    # --min-rate=5000 : send packets no slower than 5000 per second
     # -n : no DNS resolution
-    nmap -p- --open -T4 --min-rate=1000 -n "$domain" | grep ^[0-9] | anew "$PORTS_OUT"
+    nmap -p 21,22,23,25,53,80,110,143,443,3306,3389,4502,4503,5432,5900,6379,7000,7001,7002,7777,8000,8080,8888,8443 --open -T5 --min-rate=5000 -n "$domain" | grep ^[0-9] | anew "$PORTS_OUT"
     echo "---" | anew "$PORTS_OUT"
 done < "$DOM_DIR/domains.txt"
 

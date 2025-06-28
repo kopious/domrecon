@@ -9,16 +9,18 @@ See checkdeps.sh for a list of dependencies.
 
 ## Run
 
-Running the script will use [assetfinder](https://github.com/tomnomnom/assetfinder) to build a list of subdomains, and then attempt 
-to fetch https results from each using Fairly Fast Fetch [fff](https://github.com/tomnomnom/fff).
+Running the script will use [assetfinder](https://github.com/tomnomnom/assetfinder) to build a list of subdomains, filters the url list using httprobe, and then attempt to fetch https results from each using Fairly Fast Fetch [fff](https://github.com/tomnomnom/fff).
 
 Uses [httprobe](https://github.com/tomnomnom/httprobe) to validate working http or https servers.
 
 Filters the result set to the root domain and any sub-domain off the root.
 
-Finally, uses [nuclei](https://github.com/projectdiscovery/nuclei) to scan for medium to critical known vulnerabilities. 
+Uses [nuclei](https://github.com/projectdiscovery/nuclei) to scan for medium to critical known vulnerabilities. 
 
-This results in a good starting point to begin research. 
+Discovers open ports using nmap and then uses dirsearch to enumerate directories on each domain. 
+ - requires https://github.com/danielmiessler/SecLists
+ - uses quickhits.txt wordlist
+ - only returns 200 responses
 
 ```
 ▶ ./domrecon.sh example.com

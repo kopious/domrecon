@@ -30,11 +30,9 @@ echo $DOM | anew $DOM_FIL
 
 assetfinder $1 | anew $DOM_FIL 
 
-cat $DOM_FIL | httprobe | grep "$DOM" | anew $URL_FIL
+cat $DOM_FIL | httprobe -s -p https:443 | grep "$DOM" | anew $URL_FIL
 
-# cat $DOM_FIL |awk '{print "https://"$1}' > $URL_FIL 
-
-cat $URL_FIL | fff -S -o $DOM_DIR - &> /dev/null
+cat $URL_FIL | fff -s 200 -o $DOM_DIR - &> /dev/null
 
 
 exit 0

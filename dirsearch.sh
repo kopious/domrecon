@@ -20,7 +20,8 @@ PORTS_FILE="$DOM_DIR/open_ports.txt"
 # Clean old output
 > "$DIRSEARCH_OUT"
 
-WORDLIST=~/git/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt
+#WORDLIST=~/git/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt
+WORDLIST=~/git/SecLists/Discovery/Web-Content/quickhits.txt
 [[ ! -f "$WORDLIST" ]] && { echo -en "\nWordlist not found: $WORDLIST\n";exit 1; }
 
 # Create filtered wordlist without comments
@@ -31,7 +32,7 @@ grep -v '^#' "$WORDLIST" > "$FILTERED_WORDLIST"
 run_dirsearch() {
     local url=$1
     echo "[+] Directory search for: $url" | anew "$DIRSEARCH_OUT"
-    dirsearch -url "$url" -wordlist "$FILTERED_WORDLIST" | anew "$DIRSEARCH_OUT"
+    dirsearch -200only -url "$url" -wordlist "$FILTERED_WORDLIST" | anew "$DIRSEARCH_OUT"
     echo "---" | anew "$DIRSEARCH_OUT"
 }
 

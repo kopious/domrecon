@@ -1,21 +1,21 @@
 #!/bin/sh
 #
-# NAME: scan.sh
+# NAME: nuclei.sh
 #
 # AUTH: JLONG
 #
 # DATE: 2022-06-27
 #
-# EXEC: scan.sh example.com
-#	cat urls.txt | scan.sh -
+# EXEC: nuclei.sh example.com
+#	cat urls.txt | nuclei.sh -
 #
 # This script is designed to run on Kali Linux with kali-tools-top10 installed 
 # for dependencies and requires init.sh from https://github.com/kopious/domrecon
 # 
-# scan.sh outputs to ~/recon/<domain>/scan.out 
+# nuclei.sh outputs to ~/recon/<domain>/nuclei.out 
 # requires: <domain> as input from stdin
 # requires: ~/recon/<domain>/urls.txt to exist
-# outputs: ~/recon/<domain>/scan.out 
+# outputs: ~/recon/<domain>/nuclei.out 
 #
 
 set -x
@@ -24,7 +24,7 @@ DOM=$1
 DOM_DIR=~/recon/$DOM
 DOM_FIL=$DOM_DIR/domains.txt
 URL_FIL=$DOM_DIR/urls.txt
-OUT_FIL=$DOM_DIR/scan.out
+OUT_FIL=$DOM_DIR/nuclei.out
 TMP_FIL=$DOM_DIR/http.tmp
 
 echo "processing ${DOM}" >> $OUT_FIL
@@ -34,6 +34,6 @@ echo "processing ${DOM}" >> $OUT_FIL
 
 cat $URL_FIL | grep $DOM | anew $TMP_FIL
 
-nuclei -l $TMP_FIL -t ~/nuclei-templates -c 50 -rl 300 -bs 25 -mhe 10 -ni -nc | anew $OUT_FIL
+nuclei -l $TMP_FIL -t ~/nuclei-templates -c 10 -rl 100 -bs 25 -mhe 10 -fr -ni -nc -o $OUT_FIL
 
 exit 0

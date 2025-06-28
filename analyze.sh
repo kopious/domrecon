@@ -12,7 +12,7 @@
 #   (all saved to ~/recon/<domain>/analysis/)
 #
 
-set -e
+set -x
 
 if [ -z "$1" ]; then
     echo "Usage: $0 <domain>"
@@ -43,16 +43,16 @@ VULN_LIBS_LIST='jquery|bootstrap|angular|react|vue|ember|dojo|backbone|knockout|
 
 # Security headers to check for
 SECURITY_HEADERS=(
-    'Strict-Transport-Security'
-    'Content-Security-Policy'
-    'X-Frame-Options'
-    'X-Content-Type-Options'
-    'X-XSS-Protection'
-    'Referrer-Policy'
-    'Permissions-Policy'
-    'Cross-Origin-Opener-Policy'
-    'Cross-Origin-Embedder-Policy'
-    'Cross-Origin-Resource-Policy'
+    '< Strict-Transport-Security'
+    '< Content-Security-Policy'
+    '< X-Frame-Options'
+    '< X-Content-Type-Options'
+    '< X-XSS-Protection'
+    '< Referrer-Policy'
+    '< Permissions-Policy'
+    '< Cross-Origin-Opener-Policy'
+    '< Cross-Origin-Embedder-Policy'
+    '< Cross-Origin-Resource-Policy'
 )
 
 # Function to analyze headers
@@ -63,8 +63,8 @@ analyze_headers() {
     echo "[+] Analyzing headers for: $URL" | anew "$HEADER_ISSUES_OUT"
     
     # Check for server information disclosure
-    grep -i '^Server:' "$HEADERFILE" | anew "$HEADER_ISSUES_OUT" || true
-    grep -i '^X-Powered-By:' "$HEADERFILE" | anew "$HEADER_ISSUES_OUT" || true
+    grep -i '^< Server:' "$HEADERFILE" | anew "$HEADER_ISSUES_OUT" || true
+    grep -i '^< X-Powered-By:' "$HEADERFILE" | anew "$HEADER_ISSUES_OUT" || true
     
     # Check for missing security headers
     for header in "${SECURITY_HEADERS[@]}"; do
@@ -74,7 +74,7 @@ analyze_headers() {
     done
     
     # Check cookie security
-    grep -i '^Set-Cookie:' "$HEADERFILE" | while read -r cookie; do
+    grep -i '^< Set-Cookie:' "$HEADERFILE" | while read -r cookie; do
         if ! echo "$cookie" | grep -qi 'secure'; then
             echo "[-] Cookie without Secure flag: $cookie" | anew "$HEADER_ISSUES_OUT"
         fi
@@ -87,7 +87,7 @@ analyze_headers() {
     done
     
     # Check CORS headers
-    grep -i '^Access-Control-Allow-' "$HEADERFILE" | while read -r cors; do
+    grep -i '^< Access-Control-Allow-' "$HEADERFILE" | while read -r cors; do
         if echo "$cors" | grep -qi 'origin:.*\*'; then
             echo "[-] Overly permissive CORS: $cors" | anew "$HEADER_ISSUES_OUT"
         fi
@@ -99,7 +99,7 @@ analyze_headers() {
 # Find all .body files
 find "$DOM_DIR" -type f -name '*.body' | while read BODYFILE; do
     # Get corresponding header file
-    HEADERFILE="${BODYFILE%.body}.header"
+    HEADERFILE="${BODYFILE%.body}.headers"
     # Derive URL from path
     RELPATH="${BODYFILE#$DOM_DIR/}"
     SUBDOM="${RELPATH%%/*}"
@@ -115,13 +115,13 @@ find "$DOM_DIR" -type f -name '*.body' | while read BODYFILE; do
     # Vulnerable JS libraries
     cat "$BODYFILE" | grep -Eoi "<script[^>]+src=['\"][^'\"]+['\"]" | \
         grep -E "$VULN_LIBS_LIST" | \
-        awk -F"src=| |'|\"" '{print $2}' | anew "$VULN_LIBS_OUT" || true
+        awk -F"src=" '{print $2}' | anew "$VULN_LIBS_OUT" || true
 
     # Asset Enumeration: Links
     cat "$BODYFILE" | grep -Eoi "href=['\"][^'\"]+['\"]" | \
-        awk -F"href=|'|\"" '{print $2}' | anew "$LINKS_OUT" || true
+        awk -F"href=" '{print $2}' | anew "$LINKS_OUT" || true
     cat "$BODYFILE" | grep -Eoi "src=['\"][^'\"]+['\"]" | \
-        awk -F"src=|'|\"" '{print $2}' | anew "$LINKS_OUT" || true
+        awk -F"src=" '{print $2}' | anew "$LINKS_OUT" || true
 
     # Asset Enumeration: Subdomains
     cat "$BODYFILE" | grep -Eo "[a-zA-Z0-9._-]+\\.$DOM" | anew "$SUBDOMAINS_OUT" || true
